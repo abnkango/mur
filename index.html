@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0d1020" />
+  <meta name="description" content="مراجعة — بطاقات تعلم بالتكرار المتباعد" />
+  <title>مراجعة — بطاقات التكرار المتباعد</title>
+  <style>
+:root {
+  --bg: #0d1020;
+  --bg-soft: #13172b;
+  --panel: rgba(24, 29, 52, .82);
+  --panel-strong: #1b2140;
+  --line: rgba(255, 255, 255, .09);
+  --text: #f5f5ff;
+  --muted: #9297b2;
+  --primary: #8b7cff;
+  --primary-soft: rgba(139, 124, 255, .15);
+  --mint: #6fe0c1;
+  --mint-soft: rgba(111, 224, 193, .14);
+  --danger: #ff7b94;
+  --shadow: 0 24px 70px rgba(0, 0, 0, .24);
+  --radius-lg: 28px;
+  --radius-md: 20px;
+  --radius-sm: 14px;
+}
+
+* { box-sizing: border-box; }
+html { min-height: 100%; background: var(--bg); }
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background: radial-gradient(circle at 80% -10%, rgba(139,124,255,.14), transparent 34rem), var(--bg);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+button, input, textarea { font: inherit; }
+button { color: inherit; cursor: pointer; }
+button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid rgba(139,124,255,.45); outline-offset: 3px; }
+
+.ambient { position: fixed; border-radius: 999px; filter: blur(80px); opacity: .16; pointer-events: none; z-index: -1; }
+.ambient-one { width: 220px; height: 220px; background: #695dff; top: 18%; left: -110px; }
+.ambient-two { width: 180px; height: 180px; background: #4bc4ba; bottom: 8%; right: -90px; opacity: .08; }
+
+.app-header { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 22px 0 10px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { display: inline-flex; align-items: center; gap: 11px; color: var(--text); text-decoration: none; }
+.brand-mark { width: 43px; height: 43px; display: grid; place-items: center; position: relative; border-radius: 15px; background: linear-gradient(135deg, #a197ff, #6558df); color: #fff; font-size: 23px; font-weight: 900; box-shadow: 0 10px 28px rgba(104, 87, 234, .3); }
+.brand-dot { width: 5px; height: 5px; position: absolute; top: 8px; left: 9px; border-radius: 50%; background: #c4ffef; }
+.brand-copy { display: grid; line-height: 1.18; }
+.brand-copy strong { font-size: 16px; letter-spacing: -.02em; }
+.brand-copy small { color: var(--muted); font-size: 10px; margin-top: 4px; }
+.header-tools { display: flex; gap: 8px; }
+.icon-button, .ghost-button, .text-button { border: 0; background: transparent; }
+.icon-button { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 12px; color: var(--muted); font-size: 22px; transition: .2s ease; }
+.icon-button:hover { color: var(--text); background: var(--primary-soft); border-color: rgba(139,124,255,.35); transform: translateY(-1px); }
+
+.app-shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 18px 0 110px; }
+.screen { display: none; animation: rise .35s ease both; }
+.screen.active { display: block; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.eyebrow { color: var(--primary); font-size: 12px; font-weight: 800; letter-spacing: .08em; margin: 0 0 8px; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { max-width: 650px; margin-bottom: 12px; font-size: clamp(30px, 7vw, 56px); line-height: 1.08; letter-spacing: -.055em; }
+h2 { margin-bottom: 5px; font-size: clamp(23px, 4vw, 32px); line-height: 1.2; letter-spacing: -.04em; }
+h3 { margin-bottom: 4px; font-size: 18px; line-height: 1.3; }
+.muted { color: var(--muted); }
+.subtitle { max-width: 530px; margin-bottom: 0; color: var(--muted); font-size: 15px; }
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin: 32px 0 14px; }
+.section-heading .muted { margin: 0; font-size: 13px; }
+
+.hero { display: grid; grid-template-columns: 1fr; gap: 22px; padding: clamp(24px, 5vw, 48px); overflow: hidden; position: relative; border: 1px solid var(--line); border-radius: var(--radius-lg); background: linear-gradient(135deg, rgba(27,33,64,.94), rgba(21,25,46,.77)); box-shadow: var(--shadow); }
+.hero::after { content: ""; position: absolute; width: 250px; height: 250px; border: 1px solid rgba(139,124,255,.25); border-radius: 50%; left: -90px; bottom: -140px; box-shadow: 0 0 0 22px rgba(139,124,255,.04), 0 0 0 44px rgba(139,124,255,.025); }
+.hero-content { position: relative; z-index: 1; }
+.hero-action { display: flex; align-items: end; justify-content: start; position: relative; z-index: 1; }
+.primary-button, .secondary-button, .danger-button { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 0 17px; border-radius: 13px; border: 1px solid transparent; font-weight: 800; transition: .2s ease; }
+.primary-button { color: #fff; background: linear-gradient(135deg, #9b8fff, #6c5ce7); box-shadow: 0 10px 24px rgba(106, 88, 226, .25); }
+.primary-button:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(106, 88, 226, .35); }
+.secondary-button { color: var(--text); background: rgba(255,255,255,.05); border-color: var(--line); }
+.secondary-button:hover { background: var(--primary-soft); border-color: rgba(139,124,255,.35); }
+.danger-button { color: var(--danger); background: rgba(255,123,148,.08); border-color: rgba(255,123,148,.16); }
+.danger-button:hover { background: rgba(255,123,148,.15); }
+.small-button { min-height: 36px; padding: 0 12px; font-size: 12px; border-radius: 11px; }
+.wide-button { width: 100%; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+.stat-card { padding: 16px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(24,29,52,.68); }
+.stat-label { display: block; color: var(--muted); font-size: 12px; }
+.stat-value { display: block; margin-top: 8px; font-size: 27px; font-weight: 900; letter-spacing: -.04em; }
+.stat-accent { color: var(--mint); }
+
+.deck-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.deck-card { display: flex; flex-direction: column; gap: 18px; padding: 20px; border: 1px solid var(--line); border-radius: var(--radius-md); background: linear-gradient(145deg, rgba(27,33,64,.86), rgba(20,24,43,.7)); transition: .22s ease; }
+.deck-card:hover { transform: translateY(-3px); border-color: rgba(139,124,255,.38); }
+.deck-card-top, .deck-card-bottom, .list-row, .modal-head, .review-meta, .review-toolbar, .summary-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.deck-icon { width: 42px; height: 42px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 14px; color: var(--primary); background: var(--primary-soft); font-size: 21px; }
+.deck-title { display: flex; align-items: center; gap: 11px; min-width: 0; }
+.deck-title h3 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.deck-card-bottom { padding-top: 15px; border-top: 1px solid var(--line); }
+.mini-stats { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 12px; }
+.mini-stats b { color: var(--text); }
+.due-badge { color: var(--mint); }
+.card-actions { display: flex; gap: 6px; }
+.text-button { color: var(--muted); font-size: 13px; padding: 4px 0; }
+.text-button:hover { color: var(--text); }
+.text-button.danger-text { color: var(--danger); }
+
+.page-head { display: flex; align-items: end; justify-content: space-between; gap: 14px; margin-bottom: 20px; }
+.back-link { margin-bottom: 10px; color: var(--muted); font-size: 13px; }
+.back-link:hover { color: var(--text); }
+.cards-list { display: grid; gap: 10px; }
+.card-row { display: grid; grid-template-columns: auto 1fr; gap: 13px; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: rgba(24,29,52,.68); }
+.card-index { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 10px; color: var(--primary); background: var(--primary-soft); font-size: 12px; font-weight: 800; }
+.card-content { min-width: 0; }
+.card-front { margin-bottom: 4px; font-weight: 800; white-space: pre-wrap; overflow-wrap: anywhere; }
+.card-back { color: var(--muted); font-size: 13px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.card-row .card-actions { grid-column: 2; }
+
+.empty-state { padding: 38px 24px; text-align: center; border: 1px dashed rgba(139,124,255,.3); border-radius: var(--radius-md); background: rgba(139,124,255,.055); }
+.empty-icon { width: 54px; height: 54px; display: grid; place-items: center; margin: 0 auto 13px; border-radius: 18px; background: var(--primary-soft); color: var(--primary); font-size: 24px; }
+.empty-state h3 { margin-bottom: 7px; }
+.empty-state p { max-width: 380px; margin: 0 auto 18px; color: var(--muted); font-size: 13px; }
+
+.review-shell { max-width: 780px; margin: 8px auto 0; }
+.review-toolbar { margin-bottom: 22px; }
+.review-deck { color: var(--muted); font-size: 13px; }
+.progress-wrap { flex: 1; display: flex; align-items: center; gap: 11px; max-width: 360px; }
+.progress-bar { width: 100%; height: 7px; overflow: hidden; border-radius: 99px; background: rgba(255,255,255,.08); }
+.progress-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--primary), var(--mint)); transition: width .3s ease; }
+.progress-count { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.review-card { min-height: 380px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 34px 22px; text-align: center; border: 1px solid rgba(139,124,255,.25); border-radius: var(--radius-lg); background: radial-gradient(circle at 50% 0%, rgba(139,124,255,.15), transparent 50%), var(--panel); box-shadow: var(--shadow); }
+.review-label { color: var(--primary); font-size: 12px; font-weight: 800; }
+.review-text { max-width: 650px; margin: 16px 0 24px; font-size: clamp(30px, 8vw, 58px); line-height: 1.18; letter-spacing: -.05em; white-space: pre-wrap; overflow-wrap: anywhere; }
+.reveal-button { min-height: 48px; padding: 0 22px; border: 1px solid rgba(139,124,255,.38); border-radius: 13px; color: var(--text); background: var(--primary-soft); font-weight: 800; }
+.reveal-button:hover { background: rgba(139,124,255,.24); }
+.review-answer { width: min(100%, 570px); margin: 0 0 28px; padding: 18px; border-top: 1px solid var(--line); color: var(--mint); font-size: 21px; font-weight: 700; white-space: pre-wrap; overflow-wrap: anywhere; animation: answer-in .3s ease both; }
+@keyframes answer-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.rating-grid { width: 100%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 9px; }
+.rating-button { min-height: 58px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 14px; color: var(--text); background: rgba(255,255,255,.05); font-weight: 800; transition: .2s ease; }
+.rating-button small { display: block; color: var(--muted); font-size: 10px; font-weight: 500; }
+.rating-button:hover { transform: translateY(-2px); }
+.rating-again:hover { border-color: var(--danger); background: rgba(255,123,148,.11); }
+.rating-hard:hover { border-color: #ffbd72; background: rgba(255,189,114,.1); }
+.rating-good:hover { border-color: var(--mint); background: var(--mint-soft); }
+.rating-easy:hover { border-color: var(--primary); background: var(--primary-soft); }
+
+.summary-card { max-width: 660px; margin: 32px auto 0; padding: 34px 22px; text-align: center; border: 1px solid var(--line); border-radius: var(--radius-lg); background: linear-gradient(145deg, rgba(27,33,64,.9), rgba(20,24,43,.72)); box-shadow: var(--shadow); }
+.summary-icon { width: 62px; height: 62px; display: grid; place-items: center; margin: 0 auto 15px; border-radius: 21px; background: var(--mint-soft); color: var(--mint); font-size: 30px; }
+.summary-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 25px 0; }
+.summary-stat { padding: 13px 8px; border-radius: 14px; background: rgba(255,255,255,.045); }
+.summary-stat strong { display: block; font-size: 25px; }
+.summary-stat span { color: var(--muted); font-size: 11px; }
+.summary-actions { justify-content: center; flex-wrap: wrap; }
+
+.bottom-nav { position: fixed; z-index: 10; right: 50%; bottom: 16px; width: min(360px, calc(100% - 32px)); display: flex; justify-content: center; gap: 8px; padding: 7px; transform: translateX(50%); border: 1px solid rgba(255,255,255,.1); border-radius: 18px; background: rgba(15,18,35,.88); box-shadow: 0 15px 40px rgba(0,0,0,.35); backdrop-filter: blur(18px); }
+.nav-item { min-width: 112px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 10px 14px; border: 0; border-radius: 13px; color: var(--muted); background: transparent; }
+.nav-item span { font-size: 18px; line-height: 1; }
+.nav-item small { font-size: 12px; font-weight: 800; }
+.nav-item.active { color: var(--text); background: var(--primary-soft); }
+
+.modal-root { position: relative; z-index: 30; }
+.modal-backdrop { position: fixed; inset: 0; display: grid; place-items: center; padding: 18px; background: rgba(5,7,16,.72); backdrop-filter: blur(10px); }
+.modal { width: min(520px, 100%); max-height: min(720px, calc(100vh - 36px)); overflow: auto; padding: 22px; border: 1px solid var(--line); border-radius: 22px; background: #181d34; box-shadow: var(--shadow); animation: rise .2s ease both; }
+.modal-head { margin-bottom: 20px; }
+.modal-head h3 { margin: 0; }
+.close-button { width: 34px; height: 34px; display: grid; place-items: center; border: 0; border-radius: 10px; color: var(--muted); background: rgba(255,255,255,.05); font-size: 20px; }
+.form-field { display: grid; gap: 7px; margin-bottom: 16px; }
+.form-field label { color: var(--muted); font-size: 13px; font-weight: 700; }
+.form-field input, .form-field textarea { width: 100%; padding: 13px 14px; border: 1px solid var(--line); border-radius: 13px; outline: 0; color: var(--text); background: rgba(9,12,25,.5); }
+.form-field textarea { min-height: 122px; resize: vertical; }
+.form-field input:focus, .form-field textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(139,124,255,.12); }
+.form-error { min-height: 22px; margin: -5px 0 11px; color: var(--danger); font-size: 12px; }
+.modal-actions { display: flex; justify-content: flex-start; gap: 8px; padding-top: 4px; }
+.toast { position: fixed; z-index: 40; right: 50%; bottom: 93px; max-width: min(430px, calc(100% - 32px)); padding: 12px 15px; opacity: 0; transform: translate(50%, 12px); pointer-events: none; border: 1px solid rgba(255,123,148,.28); border-radius: 13px; color: #ffeaf0; background: rgba(70,25,43,.95); box-shadow: var(--shadow); font-size: 13px; transition: .25s ease; }
+.toast.show { opacity: 1; transform: translate(50%, 0); }
+.toast.success { border-color: rgba(111,224,193,.25); color: #dcfff5; background: rgba(16,62,55,.95); }
+
+@media (min-width: 600px) {
+  .hero { grid-template-columns: 1fr auto; align-items: end; }
+  .hero-action { align-items: center; }
+  .stats-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .deck-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rating-grid { grid-template-columns: repeat(4, 1fr); }
+  .review-card { min-height: 450px; padding: 44px; }
+}
+@media (min-width: 900px) {
+  .app-header { padding-top: 30px; }
+  .app-shell { padding-top: 30px; }
+  .deck-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .bottom-nav { position: static; transform: none; width: min(1180px, calc(100% - 32px)); margin: 0 auto 24px; justify-content: flex-start; padding: 0; border: 0; box-shadow: none; background: transparent; backdrop-filter: none; }
+  .nav-item { min-width: auto; padding: 9px 14px; }
+  .toast { bottom: 28px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+</style>
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <header class="app-header">
+    <a class="brand" href="#dashboard" data-action="navigate" data-screen="dashboard" aria-label="العودة إلى لوحة التحكم">
+      <span class="brand-mark">م<span class="brand-dot"></span></span>
+      <span class="brand-copy"><strong>مراجعة</strong><small>ذاكرة أهدأ، معرفة أبقى</small></span>
+    </a>
+    <div class="header-tools">
+      <button class="icon-button" data-action="export" aria-label="تصدير البيانات" title="تصدير البيانات">↥</button>
+      <button class="icon-button" data-action="import" aria-label="استيراد البيانات" title="استيراد البيانات">↧</button>
+      <input id="import-file" type="file" accept="application/json,.json" hidden />
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section id="screen-dashboard" class="screen active" aria-labelledby="dashboard-title"></section>
+    <section id="screen-decks" class="screen" aria-labelledby="decks-title"></section>
+    <section id="screen-cards" class="screen" aria-labelledby="cards-title"></section>
+    <section id="screen-review" class="screen" aria-labelledby="review-title"></section>
+    <section id="screen-summary" class="screen" aria-labelledby="summary-title"></section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+    <button data-action="navigate" data-screen="dashboard" class="nav-item active"><span>⌂</span><small>الرئيسية</small></button>
+    <button data-action="navigate" data-screen="decks" class="nav-item"><span>▤</span><small>المجموعات</small></button>
+  </nav>
+
+  <div id="modal-root" class="modal-root" aria-live="polite"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script>
+/* مراجعة — تطبيق بطاقات محلي بالكامل */
+const STORAGE_KEY = 'murajaaDataV1';
+const TODAY = () => formatLocalDate(new Date());
+const RATINGS = { again: 'مرة أخرى', hard: 'صعب', good: 'جيد', easy: 'سهل' };
+
+const ui = {
+  screen: 'dashboard',
+  selectedDeckId: null,
+  session: null,
+  summary: null,
+};
+
+let data = loadData();
+let toastTimer;
+
+function formatLocalDate(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+function parseLocalDate(dateString) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(dateString));
+  if (!match) return new Date(NaN);
+  const [, yearText, monthText, dayText] = match;
+  const year = Number(yearText); const month = Number(monthText); const day = Number(dayText);
+  const date = new Date(year, month - 1, day);
+  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day ? date : new Date(NaN);
+}
+
+function addDays(dateString, days) {
+  const date = parseLocalDate(dateString);
+  date.setDate(date.getDate() + Number(days));
+  return formatLocalDate(date);
+}
+
+function isDateString(value) {
+  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) && !Number.isNaN(parseLocalDate(value).getTime());
+}
+
+function isSafeId(value) {
+  return typeof value === 'string' && /^[A-Za-z0-9_-]{1,120}$/.test(value);
+}
+
+function generateId(prefix = 'id') {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) return `${prefix}-${crypto.randomUUID()}`;
+  return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function createCard(front, back, today = TODAY(), id = generateId('card')) {
+  return { id, front, back, repetitions: 0, easeFactor: 2.5, interval: 0, nextReview: today, lastReviewed: null };
+}
+
+function createSampleData(today = TODAY()) {
+  const vocabulary = [
+    ['achieve', 'يحقق'], ['improve', 'يحسّن'], ['reliable', 'موثوق'], ['opportunity', 'فرصة'], ['accurate', 'دقيق'],
+    ['curious', 'فضولي'], ['efficient', 'فعّال'], ['challenge', 'تحدٍّ'], ['develop', 'يطوّر'], ['knowledge', 'معرفة'],
+  ];
+  return {
+    version: 1,
+    decks: [{ id: 'sample-deck', name: 'مفردات يومية', createdAt: today, cards: vocabulary.map(([front, back], index) => createCard(front, back, today, `sample-card-${index + 1}`)) }],
+    reviews: [],
+  };
+}
+
+function createEmptyData() {
+  return { version: 1, decks: [], reviews: [] };
+}
+
+function canUseStorage() {
+  try { return typeof localStorage !== 'undefined'; } catch { return false; }
+}
+
+function loadData() {
+  if (!canUseStorage()) return createSampleData();
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return createSampleData();
+    const parsed = JSON.parse(raw);
+    return isValidData(parsed) ? parsed : createEmptyData();
+  } catch {
+    return createEmptyData();
+  }
+}
+
+function saveData() {
+  if (!canUseStorage()) return false;
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); return true; } catch { showToast('تعذر حفظ البيانات على هذا الجهاز.'); return false; }
+}
+
+function isValidCard(card) {
+  return card && typeof card === 'object' && isSafeId(card.id) &&
+    typeof card.front === 'string' && typeof card.back === 'string' &&
+    Number.isInteger(card.repetitions) && card.repetitions >= 0 &&
+    typeof card.easeFactor === 'number' && Number.isFinite(card.easeFactor) && card.easeFactor >= 1.3 &&
+    Number.isInteger(card.interval) && card.interval >= 0 && isDateString(card.nextReview) &&
+    (card.lastReviewed === null || isDateString(card.lastReviewed));
+}
+
+function isValidData(candidate) {
+  if (!candidate || typeof candidate !== 'object' || candidate.version !== 1 || !Array.isArray(candidate.decks) || !Array.isArray(candidate.reviews)) return false;
+  const ids = new Set();
+  for (const deck of candidate.decks) {
+    if (!deck || !isSafeId(deck.id) || typeof deck.name !== 'string' || !isDateString(deck.createdAt) || !Array.isArray(deck.cards)) return false;
+    if (ids.has(deck.id)) return false;
+    ids.add(deck.id);
+    for (const card of deck.cards) {
+      if (!isValidCard(card) || ids.has(card.id)) return false;
+      ids.add(card.id);
+    }
+  }
+  return candidate.reviews.every(review => review && typeof review === 'object' && typeof review.cardId === 'string' && typeof review.deckId === 'string' && isDateString(review.date) && Object.keys(RATINGS).includes(review.rating));
+}
+
+function findDeck(deckId) { return data.decks.find(deck => deck.id === deckId); }
+function findCard(deckId, cardId) { return findDeck(deckId)?.cards.find(card => card.id === cardId); }
+function countDue(deck, today = TODAY()) { return deck.cards.filter(card => card.nextReview <= today).length; }
+function countNew(deck) { return deck.cards.filter(card => card.repetitions === 0).length; }
+function getDueCards(deck, today = TODAY()) { return deck.cards.filter(card => card.nextReview <= today); }
+
+function createDeck(name) {
+  const deck = { id: generateId('deck'), name: name.trim(), createdAt: TODAY(), cards: [] };
+  data.decks.push(deck); saveData(); return deck;
+}
+
+function renameDeck(deckId, name) {
+  const deck = findDeck(deckId); if (!deck) return false;
+  deck.name = name.trim(); saveData(); return true;
+}
+
+function deleteDeck(deckId) {
+  const index = data.decks.findIndex(deck => deck.id === deckId); if (index < 0) return false;
+  data.decks.splice(index, 1); data.reviews = data.reviews.filter(review => review.deckId !== deckId); saveData(); return true;
+}
+
+function createDeckCard(deckId, front, back) {
+  const deck = findDeck(deckId); if (!deck) return null;
+  const card = createCard(front.trim(), back.trim()); deck.cards.push(card); saveData(); return card;
+}
+
+function updateDeckCard(deckId, cardId, front, back) {
+  const card = findCard(deckId, cardId); if (!card) return false;
+  card.front = front.trim(); card.back = back.trim(); saveData(); return true;
+}
+
+function deleteDeckCard(deckId, cardId) {
+  const deck = findDeck(deckId); if (!deck) return false;
+  const index = deck.cards.findIndex(card => card.id === cardId); if (index < 0) return false;
+  deck.cards.splice(index, 1); data.reviews = data.reviews.filter(review => review.cardId !== cardId); saveData(); return true;
+}
+
+function schedule(card, rating, today) {
+  const next = { ...card };
+  if (rating === 'again') {
+    next.repetitions = 0;
+    next.interval = 0;
+    next.easeFactor = Math.max(1.3, card.easeFactor - 0.2);
+    next.nextReview = today;
+  } else if (rating === 'hard') {
+    next.easeFactor = Math.max(1.3, card.easeFactor - 0.15);
+    next.interval = Math.max(1, Math.round(card.interval * 1.2));
+    next.nextReview = addDays(today, next.interval);
+  } else if (rating === 'good') {
+    next.repetitions = card.repetitions + 1;
+    next.interval = next.repetitions === 1 ? 1 : next.repetitions === 2 ? 6 : Math.round(card.interval * card.easeFactor);
+    next.nextReview = addDays(today, next.interval);
+  } else if (rating === 'easy') {
+    next.repetitions = card.repetitions + 1;
+    next.easeFactor = card.easeFactor + 0.15;
+    next.interval = next.repetitions === 1 ? 4 : Math.round(card.interval * next.easeFactor * 1.3);
+    next.nextReview = addDays(today, next.interval);
+  } else {
+    throw new Error('تقييم غير معروف');
+  }
+  return next;
+}
+
+function recordReview(deckId, cardId, rating, date = TODAY()) {
+  data.reviews.push({ id: generateId('review'), deckId, cardId, rating, date });
+}
+
+function calculateStreak(reviews, today = TODAY()) {
+  const dates = new Set(reviews.map(review => review.date));
+  let streak = 0; let cursor = today;
+  while (dates.has(cursor)) { streak += 1; cursor = addDays(cursor, -1); }
+  return streak;
+}
+
+function reviewedToday(today = TODAY()) { return data.reviews.filter(review => review.date === today).length; }
+function totalCards() { return data.decks.reduce((sum, deck) => sum + deck.cards.length, 0); }
+function escapeHTML(value) { return String(value).replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#039;', '"': '&quot;' }[char])); }
+function showToast(message, type = 'error') { const toast = document.getElementById('toast'); toast.textContent = message; toast.className = `toast show ${type === 'success' ? 'success' : ''}`; clearTimeout(toastTimer); toastTimer = setTimeout(() => { toast.className = 'toast'; }, 3200); }
+function setScreen(screen) { ui.screen = screen; document.querySelectorAll('.screen').forEach(node => node.classList.toggle('active', node.id === `screen-${screen}`)); document.querySelectorAll('.nav-item').forEach(node => node.classList.toggle('active', node.dataset.screen === screen || (screen === 'cards' && node.dataset.screen === 'decks'))); }
+
+function renderDashboard() {
+  const today = TODAY();
+  const dueTotal = data.decks.reduce((sum, deck) => sum + countDue(deck, today), 0);
+  const stats = [
+    ['مراجعات اليوم', reviewedToday(today), ''],
+    ['سلسلة الأيام', `${Math.min(calculateStreak(data.reviews, today), 7)} / 7`, 'stat-accent'],
+    ['إجمالي المراجعات', data.reviews.length, ''],
+    ['إجمالي البطاقات', totalCards(), ''],
+  ];
+  const decksHTML = data.decks.length ? data.decks.map(deck => deckCardHTML(deck)).join('') : emptyStateHTML('⌁', 'لا توجد مجموعات بعد', 'أنشئ أول مجموعة لتبدأ بناء عادة مراجعة صغيرة كل يوم.', 'create-deck', 'إنشاء مجموعة');
+  document.getElementById('screen-dashboard').innerHTML = `
+    <div class="hero">
+      <div class="hero-content"><p class="eyebrow">مساحتك اليومية</p><h1 id="dashboard-title">جلسة صغيرة اليوم، معرفة أبقى غداً.</h1><p class="subtitle">راجع ما يقترب من النسيان، واترك التكرار المتباعد يتكفّل بالباقي.</p></div>
+      <div class="hero-action"><button class="primary-button" data-action="start-any-review" ${dueTotal ? '' : 'disabled'}>ابدأ المراجعة <span>←</span></button></div>
+    </div>
+    <div class="stats-grid">${stats.map(([label, value, cls]) => `<div class="stat-card"><span class="stat-label">${label}</span><strong class="stat-value ${cls}">${value}</strong></div>`).join('')}</div>
+    <div class="section-heading"><div><p class="eyebrow">مكتبتك</p><h2>المجموعات</h2></div><p class="muted">${dueTotal ? `${dueTotal} بطاقة جاهزة اليوم` : 'كل شيء هادئ اليوم'}</p></div>
+    <div class="deck-grid">${decksHTML}</div>`;
+}
+
+function deckCardHTML(deck) {
+  const deckId = escapeHTML(deck.id);
+  return `<article class="deck-card"><div class="deck-card-top"><div class="deck-title"><span class="deck-icon">▤</span><div><h3>${escapeHTML(deck.name)}</h3><span class="muted">${deck.cards.length} بطاقة</span></div></div><div class="card-actions"><button class="text-button" data-action="open-deck" data-deck-id="${deckId}">فتح</button></div></div><div class="deck-card-bottom"><div class="mini-stats"><span>الإجمالي <b>${deck.cards.length}</b></span><span class="due-badge">مستحق <b>${countDue(deck)}</b></span><span>جديد <b>${countNew(deck)}</b></span></div><button class="secondary-button small-button" data-action="start-review" data-deck-id="${deckId}">مراجعة</button></div></article>`;
+}
+
+function emptyStateHTML(icon, title, copy, action, label) { return `<div class="empty-state"><div class="empty-icon">${icon}</div><h3>${title}</h3><p>${copy}</p>${action ? `<button class="primary-button small-button" data-action="${action}">${label}</button>` : ''}</div>`; }
+
+function renderDecks() {
+  const list = data.decks.length ? data.decks.map(deck => { const deckId = escapeHTML(deck.id); return `<article class="deck-card"><div class="deck-card-top"><div class="deck-title"><span class="deck-icon">▤</span><div><h3>${escapeHTML(deck.name)}</h3><span class="muted">أُنشئت في ${escapeHTML(deck.createdAt)}</span></div></div><div class="card-actions"><button class="text-button" data-action="rename-deck" data-deck-id="${deckId}">تعديل</button><button class="text-button danger-text" data-action="delete-deck" data-deck-id="${deckId}">حذف</button></div></div><div class="deck-card-bottom"><div class="mini-stats"><span>الإجمالي <b>${deck.cards.length}</b></span><span class="due-badge">مستحق <b>${countDue(deck)}</b></span><span>جديد <b>${countNew(deck)}</b></span></div><button class="secondary-button small-button" data-action="open-deck" data-deck-id="${deckId}">إدارة البطاقات</button></div></article>`; }).join('') : emptyStateHTML('＋', 'مجموعاتك ستظهر هنا', 'قسّم تعلمك إلى مساحات صغيرة يسهل العودة إليها.', 'create-deck', 'إنشاء مجموعة');
+  document.getElementById('screen-decks').innerHTML = `<div class="page-head"><div><p class="eyebrow">تنظيم التعلم</p><h2 id="decks-title">المجموعات</h2><p class="subtitle">كل موضوع في مكانه، وكل مراجعة في وقتها.</p></div><button class="primary-button small-button" data-action="create-deck">＋ مجموعة</button></div><div class="deck-grid">${list}</div>`;
+}
+
+function renderCards() {
+  const deck = findDeck(ui.selectedDeckId);
+  if (!deck) { ui.screen = 'decks'; renderDecks(); setScreen('decks'); return; }
+  const cards = deck.cards.length ? `<div class="cards-list">${deck.cards.map((card, index) => { const cardId = escapeHTML(card.id); return `<article class="card-row"><span class="card-index">${String(index + 1).padStart(2, '0')}</span><div class="card-content"><div class="card-front">${escapeHTML(card.front)}</div><div class="card-back">${escapeHTML(card.back)}</div></div><div class="card-actions"><button class="text-button" data-action="edit-card" data-card-id="${cardId}">تعديل</button><button class="text-button danger-text" data-action="delete-card" data-card-id="${cardId}">حذف</button></div></article>`; }).join('')}</div>` : emptyStateHTML('⌁', 'لا توجد بطاقات في هذه المجموعة', 'أضف أول سؤال وإجابة، ثم اترك الجدول يساعدك على التوقيت.', 'create-card', 'إضافة بطاقة');
+  document.getElementById('screen-cards').innerHTML = `<div class="page-head"><div><button class="text-button back-link" data-action="navigate" data-screen="decks">→ كل المجموعات</button><h2 id="cards-title">${escapeHTML(deck.name)}</h2><p class="subtitle">${deck.cards.length} بطاقة · ${countDue(deck)} مستحق اليوم</p></div><button class="primary-button small-button" data-action="create-card">＋ بطاقة</button></div>${cards}`;
+}
+
+function renderReview() {
+  const session = ui.session;
+  const deck = session && findDeck(session.deckId);
+  if (!session || !deck) { ui.screen = 'dashboard'; renderDashboard(); setScreen('dashboard'); return; }
+  const card = findCard(deck.id, session.queue[session.index]);
+  if (!card) { finishReview(); return; }
+  const progress = Math.min(100, Math.round((session.index / Math.max(session.total, 1)) * 100));
+  document.getElementById('screen-review').innerHTML = `<div class="review-shell"><div class="review-toolbar"><div><button class="text-button" data-action="exit-review">× خروج</button><div class="review-deck">${escapeHTML(deck.name)}</div></div><div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div><span class="progress-count">${session.index + 1} / ${session.total}</span></div></div><article class="review-card"><span class="review-label">السؤال</span><div class="review-text" id="review-title">${escapeHTML(card.front)}</div>${session.revealed ? `<div class="review-answer">${escapeHTML(card.back)}</div><div class="rating-grid"><button class="rating-button rating-again" data-action="rate" data-rating="again">مرة أخرى<small>إعادة الآن</small></button><button class="rating-button rating-hard" data-action="rate" data-rating="hard">صعب<small>تقدم بطيء</small></button><button class="rating-button rating-good" data-action="rate" data-rating="good">جيد<small>مناسب</small></button><button class="rating-button rating-easy" data-action="rate" data-rating="easy">سهل<small>أراك لاحقاً</small></button></div>` : `<button class="reveal-button" data-action="reveal">اضغط لكشف الإجابة</button>`}</article></div>`;
+}
+
+function renderSummary() {
+  const summary = ui.summary || { reviewed: 0, counts: {} };
+  const deck = findDeck(summary.deckId);
+  const counts = Object.entries(RATINGS).map(([key, label]) => `<div class="summary-stat"><strong>${summary.counts[key] || 0}</strong><span>${label}</span></div>`).join('');
+  const deckId = deck ? escapeHTML(deck.id) : '';
+  document.getElementById('screen-summary').innerHTML = `<div class="summary-card"><div class="summary-icon">✓</div><p class="eyebrow">اكتملت الجلسة</p><h2 id="summary-title">أحسنت، خطوة أخرى إلى الأمام.</h2><p class="subtitle" style="margin-inline:auto">راجعت ${summary.reviewed} بطاقة${deck ? ` في «${escapeHTML(deck.name)}»` : ''}. الاستمرارية أهم من الكمال.</p><div class="summary-stats">${counts}</div><div class="summary-actions"><button class="primary-button" data-action="summary-dashboard">لوحة التحكم</button>${deck ? `<button class="secondary-button" data-action="start-review" data-deck-id="${deckId}">جلسة أخرى</button>` : ''}</div></div>`;
+}
+
+function render() {
+  if (ui.screen === 'dashboard') { renderDashboard(); setScreen('dashboard'); }
+  if (ui.screen === 'decks') { renderDecks(); setScreen('decks'); }
+  if (ui.screen === 'cards') { renderCards(); setScreen('cards'); }
+  if (ui.screen === 'review') { renderReview(); setScreen('review'); }
+  if (ui.screen === 'summary') { renderSummary(); setScreen('summary'); }
+}
+
+function openModal(content) { document.getElementById('modal-root').innerHTML = `<div class="modal-backdrop" data-action="close-modal"><div class="modal" role="dialog" aria-modal="true">${content}</div></div>`; }
+function closeModal() { document.getElementById('modal-root').innerHTML = ''; }
+function formError(message) { const error = document.querySelector('.form-error'); if (error) error.textContent = message; }
+
+function showDeckForm(deckId = null) {
+  const deck = deckId ? findDeck(deckId) : null;
+  openModal(`<div class="modal-head"><h3>${deck ? 'إعادة تسمية المجموعة' : 'إنشاء مجموعة جديدة'}</h3><button class="close-button" data-action="close-modal">×</button></div><form data-form="deck"><div class="form-field"><label for="deck-name">اسم المجموعة</label><input id="deck-name" name="name" maxlength="60" value="${deck ? escapeHTML(deck.name) : ''}" placeholder="مثال: أساسيات البرمجة" autofocus /></div><div class="form-error"></div><div class="modal-actions"><button type="submit" class="primary-button">${deck ? 'حفظ الاسم' : 'إنشاء المجموعة'}</button><button type="button" class="secondary-button" data-action="close-modal">إلغاء</button></div></form>`);
+  document.querySelector('[data-form="deck"]').dataset.deckId = deckId || '';
+}
+
+function showCardForm(cardId = null) {
+  const deck = findDeck(ui.selectedDeckId); const card = cardId ? findCard(ui.selectedDeckId, cardId) : null;
+  if (!deck) return;
+  openModal(`<div class="modal-head"><h3>${card ? 'تحرير البطاقة' : 'إضافة بطاقة'}</h3><button class="close-button" data-action="close-modal">×</button></div><form data-form="card"><div class="form-field"><label for="card-front">الوجه الأمامي</label><textarea id="card-front" name="front" maxlength="2000" placeholder="السؤال أو الكلمة..." autofocus>${card ? escapeHTML(card.front) : ''}</textarea></div><div class="form-field"><label for="card-back">الوجه الخلفي</label><textarea id="card-back" name="back" maxlength="2000" placeholder="الإجابة أو الترجمة...">${card ? escapeHTML(card.back) : ''}</textarea></div><div class="form-error"></div><div class="modal-actions"><button type="submit" class="primary-button">${card ? 'حفظ التعديلات' : 'إضافة البطاقة'}</button><button type="button" class="secondary-button" data-action="close-modal">إلغاء</button></div></form>`);
+  document.querySelector('[data-form="card"]').dataset.cardId = cardId || '';
+}
+
+function startReview(deckId) {
+  const deck = findDeck(deckId); const due = deck ? getDueCards(deck) : [];
+  if (!deck || !due.length) { showToast('لا توجد بطاقات مستحقة في هذه المجموعة اليوم.', 'success'); return; }
+  ui.session = { deckId, queue: due.map(card => card.id), index: 0, total: due.length, revealed: false, reviewed: 0, counts: {} };
+  ui.screen = 'review'; render();
+}
+
+function finishReview() { ui.summary = { ...ui.session, deckId: ui.session.deckId }; ui.session = null; ui.screen = 'summary'; render(); }
+
+function handleRate(rating) {
+  const session = ui.session;
+  if (!session || !session.revealed) { showToast('اكشف الإجابة أولاً قبل اختيار التقييم.'); return; }
+  const deck = findDeck(session.deckId); const card = findCard(session.deckId, session.queue[session.index]);
+  if (!deck || !card) return;
+  const updated = schedule(card, rating, TODAY()); Object.assign(card, updated); card.lastReviewed = TODAY(); recordReview(deck.id, card.id, rating, TODAY()); saveData();
+  session.reviewed += 1; session.counts[rating] = (session.counts[rating] || 0) + 1;
+  if (rating === 'again') { session.queue.push(card.id); session.total += 1; }
+  session.index += 1; session.revealed = false;
+  if (session.index >= session.queue.length) finishReview(); else render();
+}
+
+function exportData() {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const link = document.createElement('a'); link.href = url; link.download = `murajaa-backup-${TODAY()}.json`; link.click(); URL.revokeObjectURL(url); showToast('تم تجهيز نسخة البيانات للتنزيل.', 'success');
+}
+
+function importDataFile(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const imported = JSON.parse(reader.result);
+      if (!isValidData(imported)) throw new Error('invalid');
+      askConfirm('سيستبدل الاستيراد كل البيانات الحالية. هل تريد المتابعة؟', 'استبدال', () => { data = imported; saveData(); ui.screen = 'dashboard'; render(); showToast('تم استيراد البيانات بنجاح.', 'success'); });
+    } catch { showToast('الملف غير صالح أو بنيته لا تطابق بيانات مراجعة.'); }
+  };
+  reader.onerror = () => showToast('تعذر قراءة الملف.');
+  reader.readAsText(file);
+}
+
+function askConfirm(message, yesLabel, onYes) {
+  ui.pendingConfirm = onYes;
+  openModal(`<div class="modal-head"><h3>تأكيد</h3><button class="close-button" data-action="close-modal" aria-label="إغلاق">×</button></div><p class="subtitle">${escapeHTML(message)}</p><div class="modal-actions"><button type="button" class="primary-button" data-action="confirm-yes">${yesLabel}</button><button type="button" class="secondary-button" data-action="close-modal">إلغاء</button></div>`);
+}
+function confirmDelete(message, callback) { askConfirm(message, 'حذف', () => { callback(); render(); showToast('تم الحذف.', 'success'); }); }
+function handleClick(event) {
+  const target = event.target.closest('[data-action]'); if (!target) return;
+  const action = target.dataset.action;
+  if (action === 'navigate') { ui.screen = target.dataset.screen; render(); return; }
+  if (action === 'create-deck') { showDeckForm(); return; }
+  if (action === 'rename-deck') { showDeckForm(target.dataset.deckId); return; }
+  if (action === 'delete-deck') { const deck = findDeck(target.dataset.deckId); if (deck) confirmDelete(`سيتم حذف مجموعة «${deck.name}» وكل بطاقاتها. هل أنت متأكد؟`, () => deleteDeck(deck.id)); return; }
+  if (action === 'open-deck') { ui.selectedDeckId = target.dataset.deckId; ui.screen = 'cards'; render(); return; }
+  if (action === 'create-card') { showCardForm(); return; }
+  if (action === 'edit-card') { showCardForm(target.dataset.cardId); return; }
+  if (action === 'delete-card') { const card = findCard(ui.selectedDeckId, target.dataset.cardId); if (card) confirmDelete('سيتم حذف هذه البطاقة نهائياً. هل أنت متأكد؟', () => deleteDeckCard(ui.selectedDeckId, card.id)); return; }
+  if (action === 'start-review') { startReview(target.dataset.deckId); return; }
+  if (action === 'start-any-review') { const deck = data.decks.find(item => countDue(item) > 0); if (deck) startReview(deck.id); return; }
+  if (action === 'reveal') { if (ui.session) { ui.session.revealed = true; render(); } return; }
+  if (action === 'rate') { handleRate(target.dataset.rating); return; }
+  if (action === 'exit-review') { ui.session = null; ui.screen = 'dashboard'; render(); return; }
+  if (action === 'summary-dashboard') { ui.screen = 'dashboard'; render(); return; }
+  if (action === 'close-modal') { if (target.classList.contains('modal-backdrop') && event.target !== target) return; closeModal(); return; }
+  if (action === 'confirm-yes') { const fn = ui.pendingConfirm; ui.pendingConfirm = null; closeModal(); if (fn) fn(); return; }
+  if (action === 'export') { exportData(); return; }
+  if (action === 'import') { document.getElementById('import-file').click(); return; }
+}
+
+function handleSubmit(event) {
+  const form = event.target.closest('form[data-form]'); if (!form) return;
+  event.preventDefault(); const values = new FormData(form);
+  if (form.dataset.form === 'deck') {
+    const name = String(values.get('name') || '').trim();
+    if (!name) { formError('اكتب اسماً للمجموعة أولاً.'); return; }
+    if (form.dataset.deckId) renameDeck(form.dataset.deckId, name); else createDeck(name);
+    closeModal(); ui.screen = 'decks'; render(); showToast(form.dataset.deckId ? 'تم تحديث اسم المجموعة.' : 'تم إنشاء المجموعة.', 'success');
+  }
+  if (form.dataset.form === 'card') {
+    const front = String(values.get('front') || '').trim(); const back = String(values.get('back') || '').trim();
+    if (!front || !back) { formError('اكتب الوجهين قبل الحفظ.'); return; }
+    if (form.dataset.cardId) updateDeckCard(ui.selectedDeckId, form.dataset.cardId, front, back); else createDeckCard(ui.selectedDeckId, front, back);
+    closeModal(); ui.screen = 'cards'; render(); showToast(form.dataset.cardId ? 'تم حفظ البطاقة.' : 'تمت إضافة البطاقة.', 'success');
+  }
+}
+
+document.addEventListener('click', handleClick);
+document.addEventListener('submit', handleSubmit);
+document.getElementById('import-file').addEventListener('change', event => { importDataFile(event.target.files[0]); event.target.value = ''; });
+render();
+
+</script>
+</body>
+</html>
